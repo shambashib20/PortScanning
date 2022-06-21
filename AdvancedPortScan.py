@@ -27,5 +27,18 @@ def port_scanner(target,port):
             pass
     except:
         pass
-    
-    
+
+# get the banner name
+def banner(s):
+    return s.recv(1024)
+
+# scan for the first 5051 ports
+for port in range(1, 5051):
+    thread = threading.Thread(target= port_scanner, args=[target, port])
+    thread.start()
+
+with open("vulnerable_banners.txt", "r") as file:
+    data = file.read()
+    for i in range(len(banners)):
+        if banners[i] in data:
+            print(f"[!] Vulenrablity found: {banners[i]} on port {ports[i]}")
